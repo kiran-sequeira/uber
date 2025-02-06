@@ -17,12 +17,17 @@ public class DynamoDBConfig {
     private String awsRegion;
 
     @Bean
-    public DynamoDbEnhancedClient createDynamoDbEnhancedClient() {
-        DynamoDbClient client = DynamoDbClient.builder()
+    public DynamoDbClient dynamoDbClient() {
+    return DynamoDbClient.builder()
                 .endpointOverride(URI.create(dynamoDbEndpoint))
                 .region(Region.of(awsRegion))
                 .build();
+    }
 
-        return DynamoDbEnhancedClient.builder().dynamoDbClient(client).build();
+    @Bean
+    public DynamoDbEnhancedClient dynamoDbEnhancedClient(DynamoDbClient dynamoDbClient) {
+        return DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(dynamoDbClient)
+                .build();
     }
 }

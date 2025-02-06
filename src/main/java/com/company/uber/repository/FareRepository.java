@@ -10,7 +10,7 @@ import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
 @Repository
 public class FareRepository {
-    private DynamoDbEnhancedClient client;
+    private final DynamoDbEnhancedClient client;
     private DynamoDbTable<Fare> fareTable;
 
     public FareRepository(DynamoDbEnhancedClient client) {

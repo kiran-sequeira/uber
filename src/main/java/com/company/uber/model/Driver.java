@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Driver {
     private final String driverId;
     private String name;
-    private String status;
+    private String status; // AVAILABLE, BUSY
     private Location currentLocation;
 
     public Driver() {
