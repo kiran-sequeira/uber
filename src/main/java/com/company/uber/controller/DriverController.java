@@ -4,6 +4,8 @@ import com.company.uber.model.Location;
 import com.company.uber.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.company.uber.service.RideService;
+
 @RestController
 @RequestMapping("/drivers")
 public class DriverController {
@@ -21,4 +23,3 @@ public class DriverController {
         driverService.updateDriverStatus(driverId, status);
     }
 }
-

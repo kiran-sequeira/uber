@@ -1,5 +1,7 @@
 package com.company.uber.repository;
 
+import org.springframework.stereotype.Repository;
+
 import com.company.uber.model.Ride;
 import jakarta.annotation.PostConstruct;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
@@ -7,6 +9,7 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 
+@Repository
 public class RideRepository {
     private final DynamoDbEnhancedClient client;
     private DynamoDbTable<Ride> rideTable;
