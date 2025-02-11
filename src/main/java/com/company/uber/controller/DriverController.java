@@ -1,10 +1,10 @@
 package com.company.uber.controller;
 
+import com.company.uber.model.Driver;
 import com.company.uber.model.Location;
 import com.company.uber.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.company.uber.service.RideService;
 
 @RestController
 @RequestMapping("/drivers")
@@ -21,5 +21,10 @@ public class DriverController {
     @PostMapping("/update-status")
     public void updateStatus(@RequestParam String driverId, @RequestParam String status) {
         driverService.updateDriverStatus(driverId, status);
+    }
+
+    @PostMapping("/create-new")
+    public void createDriver(@RequestBody Driver driver) {
+        driverService.createDriver(driver);
     }
 }

@@ -9,13 +9,20 @@ import java.util.UUID;
 @Data
 @DynamoDbBean
 public class Driver {
-    private final String driverId;
+    private String driverId;
     private String name;
     private String status; // AVAILABLE, BUSY
     private Location currentLocation;
 
     public Driver() {
         this.driverId = UUID.randomUUID().toString();
+        this.status = "AVAILABLE";
+    }
+
+    public Driver(String name, Location currentLocation) {
+        this();
+        this.name = name;
+        this.currentLocation = currentLocation;
     }
 
     @DynamoDbPartitionKey

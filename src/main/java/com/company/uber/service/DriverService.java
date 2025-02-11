@@ -40,4 +40,8 @@ public class DriverService {
         Random random = new Random();
         return availableDrivers.get(random.nextInt(availableDrivers.size()));
     }
+
+    public void createDriver(Driver driver) {
+        driverRepository.save(driver);
+    }
 }
