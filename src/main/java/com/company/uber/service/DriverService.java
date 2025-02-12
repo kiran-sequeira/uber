@@ -42,6 +42,7 @@ public class DriverService {
     }
 
     public void createDriver(Driver driver) {
+        System.out.println("Creating driver: " + driver);
         driverRepository.save(driver);
     }
 }
