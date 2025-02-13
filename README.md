@@ -30,6 +30,7 @@ This project is a backend service for an Uber-like ride-hailing application. It 
     ```sh
     docker-compose up -d
     ```
+     For more details on the setup process and basic commands, refer to the dynamodb-redis_setup.md
 
 2. **Build the project**:
     ```sh
