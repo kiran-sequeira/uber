@@ -2,19 +2,24 @@ version: "3.8"
 
 services:
   dynamodb-local:
-    image: amazon/dynamodb-local
+    image: amazon/dynamodb-local:latest
     container_name: dynamodb-local
+    restart: unless-stopped
     ports:
       - "8000:8000"
+    user: root
     volumes:
-      - dynamo_data:/home/dynamodblocal/data
-    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data"
-
+      - ../tmp/dynamodb:/home/dynamodblocal/data
+    working_dir: /home/dynamodblocal
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
   redis:
     image: redis:latest
     container_name: redis
     ports:
       - "6379:6379"
+    volumes:
+      - redis-data:/data
 
 volumes:
   dynamo_data:
+  redis-data:

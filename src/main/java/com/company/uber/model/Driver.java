@@ -29,4 +29,15 @@ public class Driver {
     public String getDriverId() {
         return this.driverId;
     }
+
+    // Have a method to print this obj
+    @Override
+    public String toString() {
+        return "Driver{" +
+                "driverId='" + driverId + '\'' +
+                ", name='" + name + '\'' +
+                ", status='" + status + '\'' +
+                ", currentLocation=" + currentLocation +
+                '}';
+    }
 }

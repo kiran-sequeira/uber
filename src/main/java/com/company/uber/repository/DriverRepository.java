@@ -7,6 +7,8 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
+import software.amazon.awssdk.services.dynamodb.model.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,15 +17,45 @@ import java.util.stream.Collectors;
 public class DriverRepository {
 
     private final DynamoDbEnhancedClient enhancedClient;
+    private final DynamoDbClient dynamoDbClient;
+    private final String tableName = "Driver";
     private DynamoDbTable<Driver> driverTable;
 
-    public DriverRepository(DynamoDbEnhancedClient enhancedClient) {
+    public DriverRepository(DynamoDbClient dynamoDbClient, DynamoDbEnhancedClient enhancedClient) {
         this.enhancedClient = enhancedClient;
+        this.dynamoDbClient = dynamoDbClient;
     }
 
     @PostConstruct
     private void init() {
+        createTableIfNotExists();
         driverTable = enhancedClient.table("Driver", TableSchema.fromBean(Driver.class));
+    }
+
+    private void createTableIfNotExists() {
+        try {
+            dynamoDbClient.describeTable(DescribeTableRequest.builder().tableName(tableName).build());
+        } catch (ResourceNotFoundException e) {
+            CreateTableRequest createTableRequest = CreateTableRequest.builder()
+                    .tableName(tableName)
+                    .attributeDefinitions(
+                            AttributeDefinition.builder()
+                                    .attributeName("driverId")
+                                    .attributeType(ScalarAttributeType.S)
+                                    .build())
+                    .keySchema(
+                            KeySchemaElement.builder()
+                                    .attributeName("driverId")
+                                    .keyType("HASH")
+                                    .build())
+                    .provisionedThroughput(
+                            ProvisionedThroughput.builder()
+                                    .readCapacityUnits(5L)
+                                    .writeCapacityUnits(5L)
+                                    .build())
+                    .build();
+            dynamoDbClient.createTable(createTableRequest);
+        }
     }
 
     public void save(Driver driver) {

@@ -4,6 +4,7 @@ import com.company.uber.model.Driver;
 import com.company.uber.model.Location;
 import com.company.uber.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,14 +15,13 @@ public class DriverService {
 
     @Autowired
     private DriverRepository driverRepository;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     public void updateDriverLocation(String driverId, Location location) {
-        // Update driver location in the repository
-        Driver driver = driverRepository.findById(driverId);
-        if (driver != null) {
-            driver.setCurrentLocation(location);
-            driverRepository.updateDriver(driver);
-        }
+        // Update driver location in Redis
+        String key = "driver:location:" + driverId;
+        redisTemplate.opsForValue().set(key, location);
     }
 
     public void updateDriverStatus(String driverId, String status) {
@@ -42,6 +42,7 @@ public class DriverService {
     }
 
     public void createDriver(Driver driver) {
+        System.out.println("Creating driver: " + driver);
         driverRepository.save(driver);
     }
 }
