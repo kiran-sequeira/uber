@@ -1,8 +1,9 @@
 package com.company.uber.service;
 
-import com.company.uber.model.*;
-import com.company.uber.repository.DriverRepository;
-import com.company.uber.repository.FareRepository;
+import com.company.uber.model.Driver;
+import com.company.uber.model.Fare;
+import com.company.uber.model.Location;
+import com.company.uber.model.Ride;
 import com.company.uber.repository.RideRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class RideService {
         rideRepository.save(ride);
 
         // Find a random available driver and notify them
-        Driver driver = driverService.findRandomAvailableDriver();
+        Driver driver = driverService.findNearestAvailableDriver(source, 5);
         if (driver != null) {
             notificationService.notifyDriver(driver.getDriverId(), "New ride request: " + ride.getRideId());
         }
