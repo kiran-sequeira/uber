@@ -15,7 +15,7 @@ public class FareService {
     public Fare createFare(double amount) {
         Fare fare = new Fare();
         fare.setAmount(amount);
-        fareRepository.save(fare);
+//        fareRepository.save(fare);
         return fare;
     }
 

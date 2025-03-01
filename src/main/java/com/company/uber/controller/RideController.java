@@ -18,11 +18,14 @@ public class RideController {
 
     @PostMapping("/request")
     public RideResponse createRide(@RequestBody RideRequest rideRequest) {
+        System.out.println("rideRequest: " + rideRequest);
         Location source = new Location();
         source.setLatitude(rideRequest.getSourceLatitude());
         source.setLongitude(rideRequest.getSourceLongitude());
+        System.out.println("source: " + source);
 
         Location destination = new Location();
+        System.out.println("destination: " + destination);
         destination.setLatitude(rideRequest.getDestinationLatitude());
         destination.setLongitude(rideRequest.getDestinationLongitude());
 

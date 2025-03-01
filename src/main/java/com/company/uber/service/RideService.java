@@ -34,7 +34,7 @@ public class RideService {
         double fareAmount = calculateFare(source, destination);
         Fare fare = fareService.createFare(fareAmount);
         ride.setFareId(fare.getFareId());
-
+        System.out.println("ride: " + ride);
         rideRepository.save(ride);
 
         // Find a random available driver and notify them

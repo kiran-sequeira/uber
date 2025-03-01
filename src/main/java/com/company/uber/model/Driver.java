@@ -12,17 +12,15 @@ public class Driver {
     private String driverId;
     private String name;
     private String status; // AVAILABLE, BUSY
-    private Location currentLocation;
 
     public Driver() {
         this.driverId = UUID.randomUUID().toString();
         this.status = "AVAILABLE";
     }
 
-    public Driver(String name, Location currentLocation) {
+    public Driver(String name) {
         this();
         this.name = name;
-        this.currentLocation = currentLocation;
     }
 
     @DynamoDbPartitionKey
@@ -36,8 +34,7 @@ public class Driver {
         return "Driver{" +
                 "driverId='" + driverId + '\'' +
                 ", name='" + name + '\'' +
-                ", status='" + status + '\'' +
-                ", currentLocation=" + currentLocation +
+                ", status='" + status +
                 '}';
     }
 }
